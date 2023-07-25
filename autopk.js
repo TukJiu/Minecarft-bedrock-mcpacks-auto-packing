@@ -76,7 +76,7 @@ const manifest = {
   "format_version": 2,
   "header": {
       "name": cfg.title,
-      "description": `${cfg.describe}\n\nThis package was made by ${cfg.author} and packaged using auto package tool`,
+      "description": `${cfg.describe}\n\nAuthor: ${cfg.author}`,
       "uuid": cfg.uuid.header,
       "version": cfg.version.packv,
       "min_engine_version": cfg.version.minv
@@ -169,15 +169,15 @@ try {
         return 5
     }
 }
-const archive = archiver('zip',{zlib: {level: 5}})
+const archive = archiver('zip',{zlib: {level: 0}})
 if(cfg.type=="a"){
     const RBP_output = fs.createWriteStream(`${cfg.title}.mcaddon`);
     archive.on('error',function(err){
         throw err;
     });
     archive.pipe(RBP_output);
-    archive.directory('./tmp/tmp_R/',`${cfg.title}`);
-    archive.directory('./tmp/tmp_B/',`${cfg.title}`);
+    archive.directory(`resources`);
+    archive.directory(`behaviors`);
     archive.finalize();
 }else if(cfg.type == "r"){
     const RP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
@@ -185,13 +185,13 @@ if(cfg.type=="a"){
         throw err;
     });
     archive.pipe(RP_output);
-    archive.directory('./tmp/tmp_R/',`${cfg.title}`);
+    archive.directory(`resources`);
 }else if (cfg.type == "s"){
     const BP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
     archive.on('error',function(err){
         throw err;
     });
     archive.pipe(BP_output);
-    archive.directory('./tmp/tmp_B/',`${cfg.title}`);
+    archive.directory(`behaviors`);
 }
-console.log("程序执行结束…")
+console.log("打包中，请等待…\n打包结束后，程序将会结束…")
