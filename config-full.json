@@ -1,0 +1,17 @@
+{
+    "title": "§b§l我的世界增量包§r",
+    "describe": "§a§l这是一段默认的描述，如果你看到这些，证明你的配置文件没有写入正确§r",
+    "author": "§c§l你没写作者吗？记得写§r",
+    "type": "a",
+    "uuid": {
+        "header": uuid.v4(),
+        "modules": [
+            uuid.v4(), uuid.v4()
+        ],
+        "dependencies": uuid.v4()
+    },
+    version: {
+        "packv": "0.0.1",
+        "minv": "1.16.0"
+    }
+}
