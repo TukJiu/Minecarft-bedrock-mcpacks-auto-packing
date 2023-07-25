@@ -11,7 +11,7 @@
         "dependencies": uuid.v4()
     },
     version: {
-        "packv": "0.0.1",
-        "minv": "1.16.0"
+        "packv": [0,0,1],
+        "minv": [1,16,0]
     }
 }

@@ -1,5 +1,6 @@
 const fs = require("fs")
 const uuid = require("uuid")
+const archiver = require("archiver")
 console.log("程序已经启动…")
 let cfg = {
     "title": "§b§l我的世界增量包§r",
@@ -14,8 +15,8 @@ let cfg = {
         "dependencies": uuid.v4()
     },
     version: {
-        "packv": "0.0.1",
-        "minv": "1.16.0"
+        "packv": [0,0,1],
+        "minv": [1,16,0]
     }
 }
 let testuuid = [cfg.uuid.header,cfg.uuid.modules[0],cfg.uuid.modules[1],cfg.uuid.dependencies]
@@ -77,8 +78,8 @@ const manifest = {
       "name": cfg.title,
       "description": `${cfg.describe}\n\nThis package was made by ${cfg.author} and packaged using auto package tool`,
       "uuid": cfg.uuid.header,
-      "version": cfg.version.packv.split("."),
-      "min_engine_version": cfg.version.minv.split(".")
+      "version": cfg.version.packv,
+      "min_engine_version": cfg.version.minv
   },
   "modules":
     [
@@ -86,13 +87,13 @@ const manifest = {
         "description": `${cfg.describe}\n\nAuthor: ${cfg.author}`,
           "type": null,
           "uuid": cfg.uuid.modules[0],
-          "version": cfg.version.packv.split(".")
+          "version": cfg.version.packv
       }
     ],
   "dependencies": [
     {
      "uuid":cfg.uuid.dependencies,
-      "version": cfg.version.packv.split(".")
+      "version": cfg.version.packv
     }
  ]
 }
@@ -168,4 +169,29 @@ try {
         return 5
     }
 }
-console.log("程序执行完成！由于技术原因，请手动打包！")
+const archive = archiver('zip',{zlib: {level: 5}})
+if(cfg.type=="a"){
+    const RBP_output = fs.createWriteStream(`${cfg.title}.mcaddon`);
+    archive.on('error',function(err){
+        throw err;
+    });
+    archive.pipe(RBP_output);
+    archive.directory('./tmp/tmp_R/',`${cfg.title}`);
+    archive.directory('./tmp/tmp_B/',`${cfg.title}`);
+    archive.finalize();
+}else if(cfg.type == "r"){
+    const RP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
+    archive.on('error',function(err){
+        throw err;
+    });
+    archive.pipe(RP_output);
+    archive.directory('./tmp/tmp_R/',`${cfg.title}`);
+}else if (cfg.type == "s"){
+    const BP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
+    archive.on('error',function(err){
+        throw err;
+    });
+    archive.pipe(BP_output);
+    archive.directory('./tmp/tmp_B/',`${cfg.title}`);
+}
+console.log("程序执行结束…")
