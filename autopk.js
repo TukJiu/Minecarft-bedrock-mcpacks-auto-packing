@@ -3,9 +3,9 @@ const uuid = require("uuid")
 const archiver = require("archiver")
 console.log("程序已经启动…")
 let cfg = {
-    "title": "§b§l我的世界增量包§r",
-    "describe": "§a§l这是一段默认的描述，如果你看到这些，证明你的配置文件没有写入正确§r",
-    "author": "§c§l你没写作者吗？记得写§r",
+    "title": "这是一个标题",
+    "describe": "这是一段默认的描述，如果你看到这些，证明你的配置文件没有写入正确",
+    "author": "你没写作者吗？记得写",
     "type": "a",
     "uuid": {
         "header": uuid.v4(),
