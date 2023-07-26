@@ -14,7 +14,7 @@ let cfg = {
         ],
         "dependencies": uuid.v4()
     },
-    version: {
+    "version": {
         "packv": [0,0,1],
         "minv": [1,16,0]
     }
