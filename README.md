@@ -20,7 +20,7 @@
 
 # 版权信息
 
-该项目可以被任何人修改和发布，但请注明作者是苏水和小丸。
+该项目可以被任何人修改和发布，但请注明作者是[苏水](https://github.com/menghengbai)和[小丸](https://github.com/MRWS0X2F)。
 
 # 友情链接
 
