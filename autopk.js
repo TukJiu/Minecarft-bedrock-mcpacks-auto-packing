@@ -3,7 +3,7 @@ const uuid = require("uuid")
 const archiver = require("archiver")
 console.log("程序已经启动…")
 let cfg = {
-    "title": "这是一个标题",
+    "title": "包名",
     "describe": "这是一段默认的描述，如果你看到这些，证明你的配置文件没有写入正确",
     "author": "你没写作者吗？记得写",
     "type": "a",
@@ -184,14 +184,16 @@ if(cfg.type=="a"){
     archive.on('error',function(err){
         throw err;
     });
-    archive.pipe(RP_output);
-    archive.directory(`resources`);
+    archive.pipe(RP_output)
+    archive.directory(`resources`)
+    archive.finalize()
 }else if (cfg.type == "s"){
     const BP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
     archive.on('error',function(err){
         throw err;
     });
-    archive.pipe(BP_output);
-    archive.directory(`behaviors`);
+    archive.pipe(BP_output)
+    archive.directory(`behaviors`)
+    archive.finalize()
 }
 console.log("打包中，请等待…\n打包结束后，程序将会结束…")
