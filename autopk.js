@@ -3,9 +3,9 @@ const uuid = require("uuid")
 const archiver = require("archiver")
 console.log("程序已经启动…")
 let cfg = {
-    "title": "包名",
-    "describe": "这是一段默认的描述，如果你看到这些，证明你的配置文件没有写入正确",
-    "author": "你没写作者吗？记得写",
+    "title": "包标题",
+    "describe": "包描述",
+    "author": "包作者",
     "type": "a",
     "uuid": {
         "header": uuid.v4(),
