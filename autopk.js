@@ -169,6 +169,21 @@ try {
         return 5
     }
 }
+console.log("复制pack_icon文件...")
+try {
+    if(cfg.type == "a" || cfg.type == "r"){
+        fs.writeFileSync("resources/pack_icon.png", fs.readFileSync("pack_icon.png"))
+    }
+    if(cfg.type =="a" || cfg.type == "s"){
+        fs.writeFileSync("behaviors/pack_icon.png", fs.readFileSync("pack_icon.png"))
+    }
+    console.log("复制pack_icon文件完成")
+}catch(e){
+    if(e) {
+        console.log("复制pack_icon失败"+e)
+        return 6
+    }
+}
 const archive = archiver('zip',{zlib: {level: 0}})
 if(cfg.type=="a"){
     const RBP_output = fs.createWriteStream(`${cfg.title}.mcaddon`);
