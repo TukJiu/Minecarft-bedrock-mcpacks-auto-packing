@@ -20,6 +20,8 @@
 
 #### 该项目可以被任何人修改和发布，但请注明作者是[苏水](https://github.com/menghengbai)和[小丸](https://github.com/MRWS0X2F)。
 
+> 以我的水平，应该没有借鉴的必要，所以建议写一个更好的。
+
 # 友情链接
 
 #### [MCBE自动打包](https://github.com/MRWS0X2F/AutoPack)

@@ -180,16 +180,18 @@ try {
     console.log("复制pack_icon文件完成")
 }catch(e){
     if(e) {
-        console.log("复制pack_icon失败"+e)
-        return 6
+        console.log("复制pack_icon失败（程序继续执行）："+e)
     }
 }
 const archive = archiver('zip',{zlib: {level: 0}})
 if(cfg.type=="a"){
     const RBP_output = fs.createWriteStream(`${cfg.title}.mcaddon`);
     archive.on('error',function(err){
-        throw err;
-    });
+        if(err) {
+            console.log("打包出现问题："+err)
+            return 6
+        }
+    })
     archive.pipe(RBP_output);
     archive.directory(`resources`);
     archive.directory(`behaviors`);
@@ -197,16 +199,22 @@ if(cfg.type=="a"){
 }else if(cfg.type == "r"){
     const RP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
     archive.on('error',function(err){
-        throw err;
-    });
+        if(err) {
+            console.log("打包出现问题："+err)
+            return 6
+        }
+    })
     archive.pipe(RP_output)
     archive.directory(`resources`)
     archive.finalize()
 }else if (cfg.type == "s"){
     const BP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
     archive.on('error',function(err){
-        throw err;
-    });
+        if(err) {
+            console.log("打包出现问题："+err)
+            return 6
+        }
+    })
     archive.pipe(BP_output)
     archive.directory(`behaviors`)
     archive.finalize()
