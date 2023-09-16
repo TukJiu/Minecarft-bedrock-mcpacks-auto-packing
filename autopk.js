@@ -52,25 +52,19 @@ try {
     }
 }
 console.log("读取配置文件完成，开始校验uuid…")
-let uugo = false
 if (!uuid.validate(cfg.uuid.header)){
-    uugo = true
     console.log("header部分uuid不合格！")
+    return 3
 }
 if (!(uuid.validate(cfg.uuid.modules[0])&&uuid.validate(cfg.uuid.modules[1]))){
-    uugo = true
     console.log("modules部分uuid不合格！")
+    return 3
 }
 if (!uuid.validate(cfg.uuid.dependencies)){
-    uugo = true
     console.log("dependencies部分uuid不合格！")
-}
-if(uugo) {
     return 3
-}else{
-console.log("uuid校验通过！")
 }
-delete uugo
+console.log("uuid校验通过！")
 console.log("读取配置的包类型…")
 const manifest = {
   "format_version": 2,
@@ -109,11 +103,9 @@ if(cfg.type=="a"){
     s.header.uuid = tmp
 }else if(cfg.type=="r"){
     console.log("这是一个资源包，已调整至资源包处理逻辑")
-    delete s
     r.modules[0].type = "resources"
 }else if(cfg.type=="s"){
     console.log("这是一个行为包，已调整至行为包处理逻辑")
-    delete r
     s.modules[0].type = "data"
 }else{
     console.log("读取包类型错误，请指定正确的包类型。它只能是r，s，a。")
@@ -146,12 +138,8 @@ if (cfg.type=="a"||cfg.type=="r") {
         f = JSON.parse(f)
         fs.writeFileSync("resources/sounds/sound_definitions.json", JSON.stringify(f,null,4))
         console.log("音频定义文件写入完成")
-        delete list
-        delete f
     }catch(e){
         console.log("音乐部分文件生成异常（程序继续执行）："+e)
-        delete list
-        delete f
     }
 }
 console.log("生成manifest文件…")
@@ -184,39 +172,37 @@ try {
     }
 }
 const archive = archiver('zip',{zlib: {level: 0}})
-if(cfg.type=="a"){
-    const RBP_output = fs.createWriteStream(`${cfg.title}.mcaddon`);
-    archive.on('error',function(err){
-        if(err) {
-            console.log("打包出现问题："+err)
-            return 6
+const output = fs.createWriteStream(`${cfg.title}.mcaddon`)
+archive.on('error',(err)=>{
+    if(err) {
+        console.log("打包出现问题："+err)
+        return 6
+    }
+})
+archive.on('waring',(warn)=>{
+    if(warn) {
+        if(warn.code == 'ENOENT') {
+            console.log("打包入口信息错误："+warn)
+        } else {
+            console.log("其他错误："+warn)
         }
-    })
-    archive.pipe(RBP_output);
+        return 7
+    }
+})
+archive.on('end',()=>{
+    console.log("成功获取所有打包数据信息")
+})
+archive.on('close',()=>{
+    console.log(`打包完成，请查看文件${cfg.title}`)
+})
+archive.pipe(output);
+if(cfg.type=="a"){
     archive.directory(`resources`);
     archive.directory(`behaviors`);
-    archive.finalize();
 }else if(cfg.type == "r"){
-    const RP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
-    archive.on('error',function(err){
-        if(err) {
-            console.log("打包出现问题："+err)
-            return 6
-        }
-    })
-    archive.pipe(RP_output)
     archive.directory(`resources`)
-    archive.finalize()
 }else if (cfg.type == "s"){
-    const BP_output = fs.createWriteStream(`${cfg.title}.mcpack`);
-    archive.on('error',function(err){
-        if(err) {
-            console.log("打包出现问题："+err)
-            return 6
-        }
-    })
-    archive.pipe(BP_output)
     archive.directory(`behaviors`)
-    archive.finalize()
 }
-console.log("打包中，请等待…\n打包结束后，程序将会结束…")
+archive.finalize()
+console.log("打包中，请等待…")
