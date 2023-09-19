@@ -12,7 +12,7 @@
 
 # 安装与使用
 
-首先安装(NodeJs)[https://nodejs.org]，一切默认即可
+首先安装[NodeJs](https://nodejs.org)，一切默认即可
 
 在下载好的项目文件夹下（包含autopk.js的位置）打开终端（cmd或powershell，具体请自行搜索），切换为英文输入法，输入`npm install uuid archiver`，然后等待，卡顿时可以试图输入`y`并按换行键，待重新出现刚打开终端时前面的内容时（此时可能会有报错，但我的测试结果是不用管，能正常运行），最后输入`node ./autopk.js`即可开始使用
 
