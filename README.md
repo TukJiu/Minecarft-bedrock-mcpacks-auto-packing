@@ -12,7 +12,7 @@
 
 # 安装
 
-#### `npm install uuid archiver`，报错不用管，不报错更好，直接`node autopk.js`即可运行
+#### 直接输入`node autopk.js`即可运行
 
 # 当前状况
 
