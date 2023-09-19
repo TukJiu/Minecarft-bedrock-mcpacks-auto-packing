@@ -190,7 +190,7 @@ archive.on('waring',(warn)=>{
     }
 })
 archive.on('end',()=>{
-    console.log("成功获取所有打包数据信息")
+    console.log(`打包完成，请查看文件${cfg.title}`)
 })
 archive.on('close',()=>{
     console.log(`打包完成，请查看文件${cfg.title}`)
