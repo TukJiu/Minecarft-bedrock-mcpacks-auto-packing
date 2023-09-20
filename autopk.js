@@ -1,6 +1,5 @@
 const fs = require("fs")
-const zlib = require("zlib")
-const path = require('path')
+// const zlib = require("zlib")
 function uuid() {
     let uuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
     for (let i = 0; i < 32; i++) uuid = uuid.replace(/x/, Math.floor(Math.random() * 16).toString(16))
@@ -9,21 +8,23 @@ function uuid() {
 function uuidvalidate(uuid) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid)
 }
-function gzip(pkpath , pkfile, pkname) {
-    fs.stat(pkfile, (err, stats) => {
-        if (err) {
-            console.log("打包出现异常" + err)
-            return 6
-        }
-        if (stats.isFile()) {
-            fs.createReadStream(`${pkpath}/${pkfile}`).pipe(zlib.createGzip()).pipe(fs.createWriteStream(pkname + '.mcaddon'))
-        } else {
-            fs.readdirSync(`${pkpath}/${pkfile}`).forEach((v,a)=>{
-                gzip(`${pkpath}/${pkfile}`, v, pkname)
-            })
-        }
-    })
-}
+// function gzip(pkpath, pkfile, pkname) {
+//     fs.stat(`${pkpath}/${pkfile}`, (err, stats) => {
+//         if (err) {
+//             console.log("打包出现异常" + err)
+//             return 6
+//         }
+//         if (stats.isFile()) {
+//             console.log(1)
+//             fs.createReadStream(`${pkpath}/${pkfile}`).pipe(zlib.createGzip()).pipe(fs.createWriteStream(pkname + '.mcaddon'))
+//         } else {
+//             console.log(0)
+//             fs.readdirSync(`${pkpath}/${pkfile}`).forEach((v, a) => {
+//                 gzip(`${pkpath}/${pkfile}`, v, pkname)
+//             })
+//         }
+//     })
+// }
 console.log("程序已经启动…")
 let cfg = {
     "title": "包标题",
@@ -194,13 +195,26 @@ try {
         console.log("复制pack_icon失败（程序继续执行）：" + e)
     }
 }
-console.log("打包中，请等待…")
-if (cfg.type == "a") {
-    gaip(`resources`, cfg.title)
-    gzip(`behaviors`, cfg.title)
-} else if (cfg.type == "r") {
-    gzip(`resources`, cfg.title)
-} else if (cfg.type == "s") {
-    gzip(`behaviors`, cfg.title)
-}
-console.log(`打包完成，请查看${cfg.title}.mcaddon`)
+// console.log("打包中，请等待…")
+// if (cfg.type == "a") {
+//     fs.readdirSync(`resources`).forEach((v, a) => {
+//         console.log(v, a)
+//         gzip(`resources`, v, cfg.title)
+//     })
+//     fs.readdirSync(`behaviors`).forEach((v, a) => {
+//         console.log(v, a)
+//         gzip(`resources`, v, cfg.title)
+//     })
+// } else if (cfg.type == "r") {
+//     fs.readdirSync(`resources`).forEach((v, a) => {
+//         console.log(v, a)
+//         gzip(`resources`, v, cfg.title)
+//     })
+// } else if (cfg.type == "s") {
+//     fs.readdirSync(`behaviors`).forEach((v, a) => {
+//         console.log(v, a)
+//         gzip(`resources`, v, cfg.title)
+//     })
+// }
+// console.log(`打包完成，请查看${cfg.title}.mcaddon`)
+console.log("由于技术原因，请自行压缩打包...\n通常，后缀可以为 .mcaddon")
