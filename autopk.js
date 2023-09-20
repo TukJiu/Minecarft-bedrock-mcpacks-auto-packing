@@ -9,18 +9,18 @@ function uuid() {
 function uuidvalidate(uuid) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(uuid)
 }
-function gzip($src, name) {
-    fs.stat($src, function (err, stats) {
+function gzip(pkpath , pkfile, pkname) {
+    fs.stat(pkfile, (err, stats) => {
         if (err) {
             console.log("打包出现异常" + err)
             return 6
         }
         if (stats.isFile()) {
-            let rs = fs.createReadStream($src);
-            $dst = path.join(__dirname, name + '.mcaddon')
-            rs.pipe(zlib.createGzip()).pipe(fs.createWriteStream($dst))
+            fs.createReadStream(`${pkpath}/${pkfile}`).pipe(zlib.createGzip()).pipe(fs.createWriteStream(pkname + '.mcaddon'))
         } else {
-            gzip(fs.readdirSync($src))
+            fs.readdirSync(`${pkpath}/${pkfile}`).forEach((v,a)=>{
+                gzip(`${pkpath}/${pkfile}`, v, pkname)
+            })
         }
     })
 }
