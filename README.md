@@ -2,7 +2,7 @@
 
 这是一个基于nodejs引擎制作的半自动化资源包打包工具，虽能减少资源包、音乐包作者的json工作量，但是并不能减少行为包作者的工作量（工作量根本不差一个文件）
 
-+ 原生版： [protozoa](https://github.com/menghengbai/Minecarft-bedrock-mcpacks-auto-packing/tree/protozoa)
++ 原生版： [protozoa](https://github.com/TukJiu/Minecarft-bedrock-mcpacks-auto-packing/tree/protozoa)
 
 # 功能与解读
 
